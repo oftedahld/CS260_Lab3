@@ -318,7 +318,7 @@ def testRemoveLast():
     else:
         print("first d was not found")
     remLast.removeLast()
-        print("Displaying after removes")
+    print("Displaying after removes")
     print("List should now be b e a r e d")
     print(" and it is " + remLast.displayList(), end="\n\n")
     
