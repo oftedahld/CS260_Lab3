@@ -5,12 +5,12 @@ def main():
     # uncomment tests to run
 
     # basic tests
-    testHead()
+    # testHead()
     # testTail()
     # testQueue()
     # testDisplay()
     # testFind()
-    # testFindRemove()
+    testFindRemove()
 
     # advanced tests
     # testAppend()
