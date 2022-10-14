@@ -10,10 +10,10 @@ def main():
     # testQueue()
     # testDisplay()
     # testFind()
-    testFindRemove()
+    # testFindRemove()
 
     # advanced tests
-    # testAppend()
+    testAppend()
     # testFindNext()
     # testRemoveLast()
     # testInsertLast()
