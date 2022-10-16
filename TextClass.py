@@ -99,6 +99,7 @@ class TextClass:
         """Creates an empty list of links"""
         self.head = None
         self.tail = None
+        self.lastFind = None
 
     def addHead(self, value):
         """Add a new link containing value at the head of the list"""
@@ -205,21 +206,60 @@ class TextClass:
 
     def append(self, otherList):
         """Append the contents of otherList to the tail of this list."""
-        tempHead = otherList.head
-        newTail = otherList.tail
-        newTail.setPrev(self.tail)
-        self.tail.setNext(tempHead)
-        self.tail = newTail
-        
+        """Version 1: Merges the lists into one, but updates to items that were previously between head and tail of otherList will be updated within otherList"""
+        # appendlist = otherList
+        # tempHead = appendlist.head
+        # newTail = appendlist.tail
+        # tempHead.setPrev(self.tail)
+        # self.tail.setNext(tempHead)
+        # self.tail = newTail
+        """Version 2: Cycles from head to tail of otherlist and adds the values found within each link to the tail of the main list. Makes no change to the original strucutre of otherList"""
+        appendLink = otherList.head
+        while appendLink != None:
+            self.addTail(appendLink.getValue())
+            appendLink = appendLink.getNext()
+            
         
     def findNext(self, value):
         """Like find, but if findNext is called for the same value after a success, it should find the next instance of that value, wrapping if necessary."""
-        """ This function saves a reference (pointer) to the link that was found. If no such link is found, it should set the reference (pointer) to an empty state (nullptr, None, null)."""
-
+        valueFound = False
+        findWrap = False
+        if self.lastFind == None or self.lastFind.getNext() == None: #Check if the lastFind has been populated yet as starting point, otherwise use head.
+            linkCheck = self.head
+        else:
+            linkCheck = self.lastFind.getNext()
+        while linkCheck != None and valueFound == False:
+            if linkCheck.getValue() == value:
+                valueFound = True
+                self.lastFind = linkCheck
+            else:
+                linkCheck = linkCheck.getNext()
+                if linkCheck == None and findWrap == False: #If we havne't wrapped yet and are now at the end, start again at the head
+                    linkCheck = self.head
+                    findWrap = True
+        return valueFound
+        
     def removeLast(self):
         """Removes the link that was saved by the last call to findNext."""
-        """If the saved value is empty (nullptr, None, null) then do nothing. After removing the link, it should set the referent(pointer) to its empty state. """
+        if self.lastFind != None:
+            if self.lastFind == self.head: #If value found was at the head, call removeHead()
+                self.removeHead()
+            elif self.lastFind == self.tail: #If value found was at the head, call removeTail()
+                self.removeTail()
+            else: #Otherwise, remove link and adjust prev and next links to point to eachother
+                prevLink = self.lastFind.getPrev()
+                nextLink = self.lastFind.getNext()
+                prevLink.setNext(nextLink)
+                nextLink.setPrev(prevLink)    
+            self.lastFind = None
     
     def insertLast(self, value):
         """Insert value before the link that was saved by the most recent call to findNext."""
-        """If the saved value is missing (nullptr, None, null) then do nothing."""
+        if self.lastFind != None:
+            if self.lastFind == self.head: #If value found was at the head, new value becomes the head
+                self.addHead(value)
+            else: #Otherwise, remove link and adjust prev and next links to point to eachother
+                prevLink = self.lastFind.getPrev()
+                temp = TextLink(value, self.lastFind, prevLink)
+                prevLink.setNext(temp)
+                self.lastFind.setPrev(temp)

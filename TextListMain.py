@@ -5,22 +5,22 @@ def main():
     # uncomment tests to run
 
     # basic tests
-    # testHead()
-    # testTail()
-    # testQueue()
-    # testDisplay()
-    # testFind()
-    # testFindRemove()
+    testHead()
+    testTail()
+    testQueue()
+    testDisplay()
+    testFind()
+    testFindRemove()
 
     # advanced tests
     testAppend()
-    # testFindNext()
-    # testRemoveLast()
-    # testInsertLast()
-    # testMixed()
+    testFindNext()
+    testRemoveLast()
+    testInsertLast()
+    testMixed()
 
     # thinking test
-    # testThink()
+    testThink()
 
 
 # basic tests
@@ -410,8 +410,63 @@ def testThink():
     # append the dogLetters list to the catLetters list and edit the result
     # when done display the two lists
 
+    catString = TextClass()
+    for index in range(CAT):
+        catString.addTail(catLetters[index])
+
+    dogString = TextClass()
+    for index in range(DOG):
+        dogString.addTail(dogLetters[index])
+
+    catString.append(dogString)
+    if catString.findNext('T'):
+        print("1st T was found")
+    else:
+        print("1st T was not found")
+    if catString.findNext('T'):
+        print("2nd T was found")
+    else:
+        print("2nd T was not found")
+    catString.insertLast(' ')
+    catString.insertLast('a')
+    catString.insertLast('n')
+    catString.insertLast('d')
+    catString.insertLast(' ')
+    catString.removeLast()
+    if catString.findNext('h'):
+        print("1st h was found")
+    else:
+        print("1st h was not found")
+    if catString.findNext('h'):
+        print("2nd h was found")
+    else:
+        print("2nd h was not found")
+    catString.insertLast('t')
+    if catString.findNext('i'):
+        print("3rd i was found")
+    else:
+        print("3rd i was not found")
+    catString.insertLast('a')
+    catString.insertLast('t')
+    catString.removeLast()
+    if catString.findNext('s'):
+        print("1st s was found")
+    else:
+        print("1st s was not found")
+    if catString.findNext('s'):
+        print("2nd s was found")
+    else:
+        print("2nd s was not found")
+    if catString.findNext('s'):
+        print("3rd s was found")
+    else:
+        print("3rd s was not found")
+    catString.removeLast()
+
     print("Expected catList output: This is a cat and that is a dog")
+    print("Actually: " + catString.displayList(), end="\n")
     print("Expected doglist output: This is a dog")
+    print("Actually: " + dogString.displayList(), end="\n")
 
     print("Done testing thinking solution\n")
 
